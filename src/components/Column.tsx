@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/hooks/useRedux";
 import React from "react";
 import TaskItem from "./TaskItem";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useBoard } from "@/hooks/useBoard";
 
 const Column = ({ colIndex }: { colIndex: number }) => {

@@ -13,7 +13,7 @@ const boardSlice = createSlice({
         isBoardActive,
         columns: [],
       };
-      newBoard.columns = payload.newBoards;
+      newBoard.columns = payload.columns;
       state.push(newBoard);
     },
     setBoardActive: (state, action) => {
@@ -31,6 +31,12 @@ const boardSlice = createSlice({
       const selectedBoard = task.find((board: any) => board.isActive);
       const column = selectedBoard.find((col, index) => index === newColIndex);
       column.tasks.push(task);
+    },
+    editBoard: (state, action) => {
+      const payload = action.payload;
+      const board = state.find((board) => board.isActive);
+      board.name = payload.name;
+      board.columns = payload.newColumns;
     },
   },
 });

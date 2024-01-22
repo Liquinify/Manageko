@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Column from "./Column";
 import {
   Box,
@@ -14,6 +14,8 @@ import {
 import { useBoard } from "@/hooks/useBoard";
 import { useForm } from "react-hook-form";
 import ClearIcon from "@mui/icons-material/Clear";
+import boardSlice from "@/store/features/boardSlice";
+import EditBoard from "./modals/EditBoard";
 
 const style = {
   сolor: "white",
@@ -33,10 +35,8 @@ const Board = () => {
   const { selectedBoard } = useBoard();
   const column = selectedBoard.columns;
   const [columnModal, setColumnModal] = useState(false);
-  const { register } = useForm();
 
   const handleOpen = () => setColumnModal(true);
-  const handleClose = () => setColumnModal(false);
 
   return (
     <Box
@@ -63,114 +63,7 @@ const Board = () => {
         New Column
       </Button>
       {columnModal && (
-        <Modal
-          open={columnModal}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style} component="form">
-            <Typography variant="h6" sx={{ color: "white" }}>
-              Edit Board
-            </Typography>
-            <InputLabel sx={{ mt: 2, color: "white" }}>Board Name</InputLabel>
-            <OutlinedInput
-              value={selectedBoard.name}
-              sx={{
-                width: "102%",
-                mt: 1,
-                height: "2.8rem",
-                background: "none",
-              }}
-            />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                mt: 2,
-              }}
-            >
-              <InputLabel sx={{ mt: 2 }}>Board Columns</InputLabel>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <OutlinedInput
-                  fullWidth
-                  sx={{
-                    mt: 1,
-                    height: "2.8rem",
-                    background: "none",
-                  }}
-                />
-                <ClearIcon />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <OutlinedInput
-                  fullWidth
-                  sx={{
-                    mt: 1,
-                    height: "2.8rem",
-                    background: "none",
-                  }}
-                />
-                <ClearIcon />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <OutlinedInput
-                  fullWidth
-                  sx={{
-                    mt: 1,
-                    height: "2.8rem",
-                    background: "none",
-                  }}
-                />
-                <ClearIcon />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  mt: 2,
-                  width: "48.7rem",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{ borderRadius: "50px", height: "3rem" }}
-                >
-                  Add New Column
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ mt: 2, borderRadius: "50px", height: "3rem" }}
-                >
-                  Save Changes
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Modal>
+        <EditBoard columnModal={columnModal} setColumnModal={setColumnModal} />
       )}
     </Box>
   );

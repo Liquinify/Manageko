@@ -1,12 +1,23 @@
-import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  Button,
+  Grid,
+  InputLabel,
+  Modal,
+  OutlinedInput,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import boardSlice from "@/store/features/boardSlice";
 import { useBoard } from "@/hooks/useBoard";
+import CreateBoard from "./modals/CreateBoard";
 
 const Sidebar = () => {
   const { boards, dispatch } = useBoard();
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpen = () => setOpenModal(true);
 
   return (
     <Box
@@ -44,6 +55,7 @@ const Sidebar = () => {
           </Typography>
         ))}
         <Typography
+          onClick={handleOpen}
           sx={{
             display: "flex",
             color: "lightblue",
@@ -55,6 +67,9 @@ const Sidebar = () => {
           <SpaceDashboardOutlinedIcon />+ Create new board
         </Typography>
       </Grid>
+      {openModal && (
+        <CreateBoard openModal={openModal} setOpenModal={setOpenModal} />
+      )}
     </Box>
   );
 };
