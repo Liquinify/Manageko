@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   Typography,
   Modal,
   Button,
@@ -11,6 +10,7 @@ import React, { SetStateAction, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useAppDispatch } from "@/hooks/useRedux";
 import boardSlice from "@/store/features/boardSlice";
+import { FieldValues, useForm } from "react-hook-form";
 
 const style = {
   сolor: "white",
@@ -18,12 +18,11 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 610,
-  height: 455,
+  width: 620,
+  minHeight: 450,
   bgcolor: "#2b2c37",
   boxShadow: 24,
   p: 4,
-  borderRadius: "5px",
 };
 
 const CreateBoard = ({
@@ -34,27 +33,33 @@ const CreateBoard = ({
   setOpenModal: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const dispatch = useAppDispatch();
-  const [name, setName] = useState("");
+  const { register, handleSubmit, setValue } = useForm();
+
   const [columns, setColumns] = useState([
     { name: "Todo", tasks: [], id: Date.now() },
-    { name: "Stuff", tasks: [], id: Date.now() + 1 },
+    { name: "Completed", tasks: [], id: Date.now() + 1 },
   ]);
 
-  const onSubmit = () => {
+  const onSubmit = async (formData: FieldValues) => {
+    const { name } = formData;
+    await setValue("name", "");
     dispatch(boardSlice.actions.addNewBoard({ name, columns }));
     setOpenModal(false);
-    setName("");
   };
 
   const deleteTask = (id: number) => {
     setColumns((prevState) => prevState.filter((task) => task.id !== id));
   };
 
-  const onChange = (id: number, newValue) => {
+  const onChange = (id: number, newValue: string) => {
     setColumns((prevState) => {
       const newState = [...prevState];
       const column = newState.find((col) => col.id === id);
-      column.name = newValue;
+
+      if (column) {
+        column.name = newValue;
+      }
+
       return newState;
     });
   };
@@ -68,36 +73,42 @@ const CreateBoard = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} component="form">
+      <Box sx={style} component="form" onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="h6" sx={{ color: "white" }}>
           Add New Board
         </Typography>
-        <InputLabel sx={{ mt: 2, color: "white" }}>Board Name</InputLabel>
+        <InputLabel sx={{ mt: 2, color: "white", fontSize: 14 }}>
+          Board Name
+        </InputLabel>
         <OutlinedInput
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          {...register("name", { required: true })}
           sx={{
             width: "100%",
             mt: 1,
             height: "2.8rem",
             background: "none",
+            color: "white",
+            "&::placeholder": {
+              color: "gray",
+            },
           }}
+          placeholder="e.g Roadmap"
         />
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            mt: 2,
+            mt: 1,
           }}
         >
-          <InputLabel sx={{ mt: 2 }}>Board Columns</InputLabel>
+          <InputLabel sx={{ color: "white", fontSize: 14, mt: 2 }}>
+            Board Columns
+          </InputLabel>
           {columns.map((column, index: number) => (
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
               }}
@@ -109,6 +120,8 @@ const CreateBoard = ({
                   mt: 1,
                   height: "2.8rem",
                   background: "none",
+                  color: "white",
+                  width: "92%",
                 }}
                 value={column.name}
                 onChange={(e) => {
@@ -116,7 +129,7 @@ const CreateBoard = ({
                 }}
               />
               <ClearIcon
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: "pointer", color: "gray", fontSize: 30 }}
                 onClick={() => deleteTask(column.id)}
               />
             </Box>
@@ -131,7 +144,15 @@ const CreateBoard = ({
           >
             <Button
               variant="contained"
-              sx={{ borderRadius: "50px", height: "3rem" }}
+              sx={{
+                borderRadius: "50px",
+                height: "3rem",
+                color: "#635fc7",
+                background: "white",
+                "&:hover": {
+                  background: "white",
+                },
+              }}
               onClick={() => {
                 setColumns((state) => [
                   ...state,
@@ -139,14 +160,14 @@ const CreateBoard = ({
                 ]);
               }}
             >
-              Add New Column
+              + Add New Column
             </Button>
             <Button
               variant="contained"
-              sx={{ mt: 2, borderRadius: "50px", height: "3rem" }}
-              onClick={onSubmit}
+              sx={{ mt: 3, borderRadius: "50px", height: "3rem" }}
+              type="submit"
             >
-              Save Changes
+              Create New Board
             </Button>
           </Box>
         </Box>

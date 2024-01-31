@@ -1,7 +1,7 @@
 import { useBoard } from "@/hooks/useBoard";
-import { useAppSelector } from "@/hooks/useRedux";
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
+import TaskModal from "./modals/TaskModal";
 
 const TaskItem = ({
   taskIndex,
@@ -11,16 +11,22 @@ const TaskItem = ({
   colIndex: number;
 }) => {
   const { selectedBoard } = useBoard();
+  const [taskModal, setTaskModal] = useState(false);
+
   const columns = selectedBoard.columns;
   const col = columns.find((_, i) => i === colIndex);
   const task = col.tasks.find((_, i) => i === taskIndex);
 
-  const [modal, setModal] = useState(false);
-
   let completedTasks = 0;
   const subtasks = task.subtasks;
 
-  subtasks.forEach((subtask) => {
+  const handleOpen = () => {
+    if (!taskModal) {
+      setTaskModal(true);
+    }
+  };
+
+  subtasks.forEach((subtask: any) => {
     if (subtask.isCompleted) {
       completedTasks++;
     }
@@ -28,6 +34,7 @@ const TaskItem = ({
 
   return (
     <Box
+      onClick={handleOpen}
       sx={{
         background: "#2b2c37",
         width: "29.2vmin",
@@ -51,6 +58,16 @@ const TaskItem = ({
       >
         {completedTasks} of {subtasks.length} subtasks
       </Typography>
+      {taskModal && (
+        <TaskModal
+          taskModal={taskModal}
+          setTaskModal={setTaskModal}
+          taskIndex={taskIndex}
+          colIndex={colIndex}
+          completedTasks={completedTasks}
+          subtasks={subtasks}
+        />
+      )}
     </Box>
   );
 };

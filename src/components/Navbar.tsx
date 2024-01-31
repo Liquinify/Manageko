@@ -1,10 +1,14 @@
 import { Box, Button, CssBaseline, Divider, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useBoard } from "@/hooks/useBoard";
+import CreateTask from "./modals/CreateTask";
 
 const Navbar = () => {
   const { selectedBoard } = useBoard();
+  const [createTaskModal, setCreateTaskModal] = useState(false);
+
+  const handleOpen = () => setCreateTaskModal(true);
 
   return (
     <Box
@@ -44,12 +48,19 @@ const Navbar = () => {
               width: "11rem",
               borderRadius: "100px",
             }}
+            onClick={handleOpen}
           >
             Add new task
           </Button>
           <MoreVertIcon sx={{ color: "gray", fontSize: "2.5rem" }} />
         </Box>
       </Box>
+      {createTaskModal && (
+        <CreateTask
+          createTaskModal={createTaskModal}
+          setCreateTaskModal={setCreateTaskModal}
+        />
+      )}
     </Box>
   );
 };
