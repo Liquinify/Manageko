@@ -12,35 +12,31 @@ const Navbar = () => {
 
   return (
     <Box
+      position="absolute"
       sx={{
         background: "#2b2c37",
         height: "6.5rem",
+        width: "84%",
         display: "flex",
         alignItems: "center",
+        justifyContent: "flex-end",
+        left: "15.9%",
+        borderBottom: "1px solid gray",
       }}
     >
       <CssBaseline />
-      <Typography sx={{ pl: 6, fontSize: 45, color: "#fff" }} variant="h1">
-        kanban
-      </Typography>
-      <Divider
-        orientation="vertical"
-        flexItem
-        sx={{ ml: 17, background: "gray" }}
-      />
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
-          gap: 150,
           flexGrow: 1,
         }}
       >
-        <Typography sx={{ fontSize: 28, color: "#fff" }}>
+        <Typography sx={{ fontSize: 28, color: "#fff", width: "20rem", pl: 5 }}>
           {selectedBoard.name}
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, pr: 2 }}>
           <Button
             variant="contained"
             sx={{
@@ -50,7 +46,7 @@ const Navbar = () => {
             }}
             onClick={handleOpen}
           >
-            Add new task
+            + Add new task
           </Button>
           <MoreVertIcon sx={{ color: "gray", fontSize: "2.5rem" }} />
         </Box>

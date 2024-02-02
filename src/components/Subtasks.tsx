@@ -31,7 +31,7 @@ const Subtasks = ({
       }}
     >
       <Checkbox onChange={onChange} checked={subtask.isCompleted} />
-      <Typography>{subtask.title}</Typography>
+      <Typography sx={{ color: "white" }}>{subtask.title}</Typography>
     </Box>
   );
 };

@@ -21,7 +21,7 @@ const Board = () => {
         top: "14%",
       }}
     >
-      {column.map((_, index: number) => (
+      {column.map((_: unknown, index: number) => (
         <Column key={index} colIndex={index} />
       ))}
       <Button
@@ -33,7 +33,7 @@ const Board = () => {
         }}
         onClick={handleOpen}
       >
-        New Column
+        + New Column
       </Button>
       {columnModal && (
         <EditBoard columnModal={columnModal} setColumnModal={setColumnModal} />

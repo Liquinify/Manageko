@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  InputLabel,
-  Modal,
-  OutlinedInput,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
 import boardSlice from "@/store/features/boardSlice";
@@ -24,17 +16,28 @@ const Sidebar = () => {
       sx={{
         background: "#2b2c37",
         width: "20.55rem",
-        height: "100vmin",
+        minHeight: "100vh",
         borderRight: "1px solid gray",
       }}
     >
-      <Typography sx={{ pl: 6, color: "lightgray", pt: 2 }}>
+      <Typography
+        sx={{ pl: 6, fontSize: 45, color: "#fff", pt: 3 }}
+        variant="h1"
+      >
+        kanban
+      </Typography>
+      <Divider
+        orientation="vertical"
+        flexItem
+        sx={{ ml: 17, background: "gray" }}
+      />
+      <Typography sx={{ pl: 6, color: "lightgray", pt: 5 }}>
         ALL BOARDS ({boards?.length})
       </Typography>
       <Grid
         container
         flexDirection={"column"}
-        sx={{ rowGap: 4, mt: 4, color: "white" }}
+        sx={{ rowGap: 4, mt: 3, color: "white" }}
       >
         {boards.map((board, index: number) => (
           <Typography

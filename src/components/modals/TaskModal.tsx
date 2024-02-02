@@ -1,21 +1,17 @@
-import { Box, MenuItem, Modal, Select, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Modal, Typography } from "@mui/material";
+import React, { SetStateAction, useState } from "react";
 import Subtasks from "../Subtasks";
 import { useBoard } from "@/hooks/useBoard";
 import boardSlice from "@/store/features/boardSlice";
+import { style } from "@/styles/modal";
 
-const style = {
-  сolor: "black",
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-48.7%, -50%)",
-  width: 530,
-  height: 560,
-  bgcolor: "white",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: "3px",
+type Props = {
+  taskModal: boolean;
+  setTaskModal: React.Dispatch<SetStateAction<boolean>>;
+  colIndex: number;
+  taskIndex: number;
+  completedTasks: number;
+  subtasks: any;
 };
 
 const TaskModal = ({
@@ -25,15 +21,16 @@ const TaskModal = ({
   taskIndex,
   completedTasks,
   subtasks,
-}) => {
+}: Props) => {
   const { selectedBoard, dispatch } = useBoard();
   const columns = selectedBoard.columns;
-  const col = columns.find((_, i) => i === colIndex);
-  const task = col.tasks.find((_, i) => i === taskIndex);
+  const col = columns.find((_: unknown, i: number) => i === colIndex);
+  const task = col.tasks.find((_: unknown, i: number) => i === taskIndex);
+
   const [status, setStatus] = useState(task.status);
   const [newColIndex, setNewColIndex] = useState(columns.indexOf(col));
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
     setNewColIndex(e.target.selectedIndex);
   };
@@ -51,17 +48,15 @@ const TaskModal = ({
   };
 
   return (
-    <Modal
-      open={taskModal}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography variant="h2" sx={{ fontSize: 25 }}>
+    <Modal open={taskModal} onClose={handleClose}>
+      <Box
+        sx={{ ...style, width: 530, minHeight: 400, bgcolor: "#2b2c37" }}
+        component="form"
+      >
+        <Typography variant="h2" sx={{ fontSize: 25, color: "white" }}>
           {task.title}
         </Typography>
-        <Typography sx={{ mt: 4 }}>
+        <Typography sx={{ mt: 4, color: "white" }}>
           {task.description ? task.description : "No description provided"}
         </Typography>
         <Box
@@ -72,7 +67,7 @@ const TaskModal = ({
             mt: 3,
           }}
         >
-          <Typography sx={{}}>
+          <Typography sx={{ color: "white" }}>
             Subtasks ({completedTasks} of {subtasks.length})
           </Typography>
           <Box
@@ -85,7 +80,7 @@ const TaskModal = ({
               mt: 1,
             }}
           >
-            {subtasks.map((subtask, index) => (
+            {subtasks.map((subtask, index: number) => (
               <Subtasks
                 key={index}
                 index={index}
@@ -97,23 +92,18 @@ const TaskModal = ({
           </Box>
         </Box>
         <Box sx={{ mt: 2 }}>
-          <Typography>Current Status</Typography>
-          {/* <Select
-            value={status}
-            onChange={onChange}
-            sx={{ height: 45, width: "100%", mt: 0.5 }}
-          >
-            {columns.map((col, index) => (
-              <MenuItem value key={index}>{col.name}</MenuItem>
-            ))}
-          </Select> */}
+          <Typography sx={{ color: "white" }}>Current Status</Typography>
           <select
-            className="select-status text-L"
             value={status}
             onChange={onChange}
-            style={{ height: "3rem", marginTop: "1rem", width: "100%" }}
+            style={{
+              height: "3rem",
+              marginTop: "1rem",
+              width: "100%",
+              marginBottom: 2,
+            }}
           >
-            {columns.map((col, index: number) => (
+            {columns.map((col: { name: string }, index: number) => (
               <option className="status-options" key={index}>
                 {col.name}
               </option>

@@ -4,27 +4,21 @@ import {
   Box,
   Button,
   InputLabel,
-  LinearProgress,
   Modal,
   OutlinedInput,
   Typography,
 } from "@mui/material";
 import React, { SetStateAction, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { style } from "@/styles/modal";
 
-const style = {
-  сolor: "white",
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-48.7%, -50%)",
-  width: 830,
-  height: 520,
-  bgcolor: "#2b2c37",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: "5px",
+type newColumns = {
+  name: string;
+  task: [];
+  id: Date;
 };
+type changeColumnsType = "add" | "edit";
 
 const EditBoard = ({
   columnModal,
@@ -34,34 +28,44 @@ const EditBoard = ({
   setColumnModal: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const { selectedBoard, dispatch } = useBoard();
-  const [isLoading, setIsLoading] = useState(true);
-  const [name, setName] = useState("");
   const [newColumns, setNewColumns] = useState([
     { name: "Todo", tasks: [], id: Date.now() },
     { name: "Stuff", tasks: [], id: Date.now() },
   ]);
+  const { register, handleSubmit, setValue } = useForm();
 
-  const type = "edit";
-
-  const handleClose = () => setColumnModal(false);
+  let type: changeColumnsType = "edit";
 
   useEffect(() => {
     if (type === "edit") {
       setNewColumns(
-        selectedBoard.columns.map((col) => {
+        selectedBoard.columns.map((col: newColumns) => {
           return { ...col, id: Date.now() };
         })
       );
-      setName(selectedBoard.name);
-      setIsLoading(false);
+      setValue("name", selectedBoard.name);
     }
-  }, [type, selectedBoard.columns, selectedBoard.name]);
+  }, [type, selectedBoard, setValue]);
 
-  const onChange = (id: number, newValue) => {
+  const onSubmit: SubmitHandler<FieldValues> = (formData) => {
+    const { name } = formData;
+    setValue("name", "");
+    console.log(name);
+    if (type === "add") {
+      dispatch(boardSlice.actions.addNewBoard({ name, newColumns }));
+    } else {
+      dispatch(boardSlice.actions.editBoard({ name, newColumns }));
+    }
+    setColumnModal(false);
+  };
+
+  const onChange = (id: number, newValue: string) => {
     setNewColumns((prevState) => {
       const newState = [...prevState];
       const column = newState.find((col) => col.id === id);
-      column.name = newValue;
+      if (column) {
+        column.name = newValue;
+      }
       return newState;
     });
   };
@@ -70,14 +74,7 @@ const EditBoard = ({
     setNewColumns((prevState) => prevState.filter((task) => task.id !== id));
   };
 
-  const onSubmit = (type: string) => {
-    setColumnModal(false);
-    if (type === "add") {
-      dispatch(boardSlice.actions.addNewBoard({ name, newColumns }));
-    } else {
-      dispatch(boardSlice.actions.editBoard({ name, newColumns }));
-    }
-  };
+  const handleClose = () => setColumnModal(false);
 
   return (
     <Modal
@@ -86,36 +83,42 @@ const EditBoard = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box
+        sx={{ ...style, width: 830, minHeight: 520, bgcolor: "#2b2c37" }}
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Typography variant="h6" sx={{ color: "white" }}>
           Edit Board
         </Typography>
         <InputLabel sx={{ mt: 2, color: "white" }}>Board Name</InputLabel>
         <OutlinedInput
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          {...register("name", { required: true })}
           sx={{
             width: "102%",
             mt: 1,
             height: "2.8rem",
             background: "none",
+            color: "white",
+            "&::placeholder": {
+              color: "gray",
+            },
           }}
         />
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
             justifyContent: "flex-start",
             mt: 2,
           }}
         >
-          <InputLabel sx={{ mt: 2 }}>Board Columns</InputLabel>
+          <InputLabel sx={{ mt: 1, color: "white" }}>Board Columns</InputLabel>
           {newColumns.map((column, index: number) => (
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
               }}
@@ -127,6 +130,11 @@ const EditBoard = ({
                   mt: 1,
                   height: "2.8rem",
                   background: "none",
+                  width: "92%",
+                  color: "white",
+                  "&::placeholder": {
+                    color: "gray",
+                  },
                 }}
                 value={column.name}
                 onChange={(e) => {
@@ -134,12 +142,11 @@ const EditBoard = ({
                 }}
               />
               <ClearIcon
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: "pointer", color: "gray", fontSize: 30 }}
                 onClick={() => deleteTask(column.id)}
               />
             </Box>
           ))}
-          {isLoading && <LinearProgress />}
           <Box
             sx={{
               display: "flex",
@@ -150,7 +157,12 @@ const EditBoard = ({
           >
             <Button
               variant="contained"
-              sx={{ borderRadius: "50px", height: "3rem" }}
+              sx={{
+                borderRadius: "50px",
+                height: "3rem",
+                color: "#635fc7",
+                background: "white",
+              }}
               onClick={() => {
                 setNewColumns((state) => [
                   ...state,
@@ -158,12 +170,12 @@ const EditBoard = ({
                 ]);
               }}
             >
-              Add New Column
+              + Add New Column
             </Button>
             <Button
               variant="contained"
-              sx={{ mt: 2, borderRadius: "50px", height: "3rem" }}
-              onClick={() => onSubmit(type)}
+              type="submit"
+              sx={{ mt: 3, borderRadius: "50px", height: "3rem" }}
             >
               Save Changes
             </Button>

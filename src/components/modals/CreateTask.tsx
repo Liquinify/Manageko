@@ -6,25 +6,12 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useBoard } from "@/hooks/useBoard";
 import boardSlice from "@/store/features/boardSlice";
-
-const style = {
-  сolor: "black",
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-48.7%, -50%)",
-  width: 720,
-  height: 640,
-  bgcolor: "white",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: "3px",
-};
+import { style } from "@/styles/modal";
 
 const CreateTask = ({
   createTaskModal,
@@ -35,11 +22,9 @@ const CreateTask = ({
 }) => {
   const handleClose = () => setCreateTaskModal(false);
   const { selectedBoard, dispatch } = useBoard();
-  const { register } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const columns = selectedBoard.columns;
   const [selectedColumn, setSelectedColumn] = useState(columns[0].name);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
 
   const [subtasks, setSubtasks] = useState([
     { id: Date.now(), title: "Make a Coffee", isCompleted: false },
@@ -51,16 +36,19 @@ const CreateTask = ({
     );
   };
 
-  const onChange = (id: number, newValue) => {
+  const onChange = (id: number, newValue: string) => {
     setSubtasks((prevState) => {
       const newState = [...prevState];
       const column = newState.find((col) => col.id === id);
-      column.title = newValue;
+      if (column) {
+        column.title = newValue;
+      }
       return newState;
     });
   };
 
-  const addNewTask = () => {
+  const addNewTask = (formData: FieldValues) => {
+    const { name, description } = formData;
     dispatch(
       boardSlice.actions.addNewTask({
         name,
@@ -69,35 +57,35 @@ const CreateTask = ({
         subtasks,
       })
     );
-    console.log({ name, description, selectedColumn, subtasks });
     handleClose();
   };
 
   return (
-    <Modal
-      open={createTaskModal}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography variant="h6" sx={{ color: "black" }}>
+    <Modal open={createTaskModal} onClose={handleClose}>
+      <Box
+        sx={{ ...style, width: 720, minHeight: 640, bgcolor: "#2b2c37" }}
+        component="form"
+        onSubmit={handleSubmit(addNewTask)}
+      >
+        <Typography variant="h6" sx={{ color: "white" }}>
           Add New Task
         </Typography>
-        <InputLabel sx={{ mt: 2 }}>Title</InputLabel>
+        <InputLabel sx={{ mt: 2, color: "white" }}>Title</InputLabel>
         <OutlinedInput
-          multiline
-          sx={{
-            width: "100%",
-            mt: 1,
-            height: "2.8rem",
-            background: "none",
-          }}
-          // {...(register("name"), { required: true })}
-          onChange={(e) => setName(e.target.value)}
           placeholder="e.g Start learning new things"
+          sx={{
+            width: "100%",
+            mt: 1,
+            height: "2.8rem",
+            "&::placeholder": {
+              color: "gray",
+            },
+          }}
+          {...register("name")}
         />
-        <InputLabel sx={{ mt: 2 }}>Description (optional)</InputLabel>
+        <InputLabel sx={{ mt: 2, color: "white" }}>
+          Description (optional)
+        </InputLabel>
         <OutlinedInput
           multiline
           sx={{
@@ -105,9 +93,12 @@ const CreateTask = ({
             mt: 1,
             height: "2.8rem",
             background: "none",
+            color: "white",
+            "&::placeholder": {
+              color: "gray",
+            },
           }}
           {...register("description")}
-          onChange={(e) => setDescription(e.target.value)}
           placeholder="e.g Start learning new things"
         />
         <Box
@@ -118,7 +109,7 @@ const CreateTask = ({
             mt: 2,
           }}
         >
-          <InputLabel sx={{ mt: 2 }}>Subtasks</InputLabel>
+          <InputLabel sx={{ mt: 2, color: "white" }}>Subtasks</InputLabel>
           {subtasks.map((subtask) => (
             <Box
               sx={{
@@ -135,6 +126,10 @@ const CreateTask = ({
                   mt: 1,
                   height: "2.8rem",
                   background: "none",
+                  color: "white",
+                  "&::placeholder": {
+                    color: "gray",
+                  },
                 }}
                 value={subtask.title}
                 onChange={(e) => {
@@ -167,21 +162,22 @@ const CreateTask = ({
             >
               + Add New Subtask
             </Button>
-            <InputLabel sx={{ mt: 2 }}>Status</InputLabel>
-
+            <InputLabel sx={{ mt: 2, color: "white", fontSize: 20 }}>
+              Status
+            </InputLabel>
             <select
               className="select-status text-L"
               onChange={(e) => setSelectedColumn(e.target.value)}
               style={{ height: "3rem", marginTop: "1rem", width: "100%" }}
             >
-              {columns.map((col, index: number) => (
+              {columns.map((col: { name: string }, index: number) => (
                 <option className="status-options" key={index}>
                   {col.name}
                 </option>
               ))}
             </select>
             <Button
-              onClick={addNewTask}
+              type="submit"
               variant="contained"
               sx={{ mt: 2, borderRadius: "50px", height: "3rem" }}
             >

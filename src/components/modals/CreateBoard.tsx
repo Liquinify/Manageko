@@ -11,19 +11,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useAppDispatch } from "@/hooks/useRedux";
 import boardSlice from "@/store/features/boardSlice";
 import { FieldValues, useForm } from "react-hook-form";
-
-const style = {
-  сolor: "white",
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 620,
-  minHeight: 450,
-  bgcolor: "#2b2c37",
-  boxShadow: 24,
-  p: 4,
-};
+import { style } from "@/styles/modal";
 
 const CreateBoard = ({
   openModal,
@@ -34,15 +22,14 @@ const CreateBoard = ({
 }) => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit, setValue } = useForm();
-
   const [columns, setColumns] = useState([
     { name: "Todo", tasks: [], id: Date.now() },
     { name: "Completed", tasks: [], id: Date.now() + 1 },
   ]);
 
-  const onSubmit = async (formData: FieldValues) => {
+  const onSubmit = (formData: FieldValues) => {
     const { name } = formData;
-    await setValue("name", "");
+    setValue("name", "");
     dispatch(boardSlice.actions.addNewBoard({ name, columns }));
     setOpenModal(false);
   };
@@ -67,13 +54,12 @@ const CreateBoard = ({
   const handleClose = () => setOpenModal(false);
 
   return (
-    <Modal
-      open={openModal}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style} component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Modal open={openModal} onClose={handleClose}>
+      <Box
+        sx={{ ...style, width: 620, minHeight: 450, bgcolor: "#2b2c37" }}
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Typography variant="h6" sx={{ color: "white" }}>
           Add New Board
         </Typography>
