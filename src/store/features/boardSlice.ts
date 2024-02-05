@@ -30,7 +30,9 @@ const boardSlice = createSlice({
         action.payload;
       const task = [title, description, status, subtasks];
       const selectedBoard = task.find((board: any) => board.isActive);
-      const column = selectedBoard.find((col, index) => index === newColIndex);
+      const column = selectedBoard.find(
+        (_: unknown, index) => index === newColIndex
+      );
       column.tasks.push(task);
     },
     editBoard: (state, action) => {
@@ -49,20 +51,12 @@ const boardSlice = createSlice({
     },
     setTaskStatus: (state, action) => {
       const payload = action.payload;
-
-      // Finds current board
       const currentBoard = state.find((board) => board.isActive);
-
-      // Finds current column
       const columns = currentBoard.columns;
       const col = columns.find((col, i) => i === payload.colIndex);
       if (payload.colIndex === payload.newColIndex) return;
-
-      // Finds current task and it's status
       const task = col.tasks.find((task, i) => i === payload.taskIndex);
       task.status = payload.status;
-
-      // Removes task from old column and adds to a new column
       col.tasks = col.tasks.filter((task, i) => i !== payload.taskIndex);
       const newCol = columns.find((col, i) => i === payload.newColIndex);
       newCol.tasks.push(task);
@@ -80,6 +74,24 @@ const boardSlice = createSlice({
         subtasks,
       };
       currentColumn?.tasks.push(newTask);
+    },
+    deleteBoard: (state) => {
+      const activeBoard = state.find((board) => board.isActive);
+      if (activeBoard) {
+        state.splice(state.indexOf(activeBoard), 1);
+      }
+    },
+    deleteTask: (state, action) => {
+      const payload = action.payload;
+      const activeBoard = state.find((board) => board.isActive);
+      const currentTask = activeBoard?.columns.find(
+        (_, i) => i === payload.colIndex
+      );
+      if (currentTask) {
+        currentTask.tasks = currentTask?.tasks.filter(
+          (_, i) => i !== payload.taskIndex
+        );
+      }
     },
   },
 });
