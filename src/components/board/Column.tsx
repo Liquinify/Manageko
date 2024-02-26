@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/hooks/useRedux";
 import React from "react";
-import TaskItem from "./TaskItem";
+import TaskItem from "../task/TaskItem";
 import { Box, Typography } from "@mui/material";
 import { useBoard } from "@/hooks/useBoard";
 

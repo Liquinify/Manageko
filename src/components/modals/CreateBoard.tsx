@@ -29,7 +29,7 @@ const CreateBoard = ({
 
   const onSubmit = (formData: FieldValues) => {
     const { name } = formData;
-    setValue("name", "");
+    setValue("title", "");
     dispatch(boardSlice.actions.addNewBoard({ name, columns }));
     setOpenModal(false);
   };
@@ -67,7 +67,7 @@ const CreateBoard = ({
           Board Name
         </InputLabel>
         <OutlinedInput
-          {...register("name", { required: true })}
+          {...register("title", { required: true })}
           sx={{
             width: "100%",
             mt: 1,

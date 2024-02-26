@@ -1,7 +1,7 @@
 import { useBoard } from "@/hooks/useBoard";
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
-import TaskModal from "./modals/TaskModal";
+import TaskModal from "../modals/TaskModal";
 
 const TaskItem = ({
   taskIndex,

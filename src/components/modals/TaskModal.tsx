@@ -1,11 +1,11 @@
 import { Box, Modal, Paper, Typography } from "@mui/material";
-import React, { SetStateAction, useState } from "react";
-import Subtasks from "../Subtasks";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
+import Subtasks from "../task/Subtasks";
 import { useBoard } from "@/hooks/useBoard";
 import boardSlice from "@/store/features/boardSlice";
 import { style } from "@/styles/modal";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import EditBoard from "./EditBoard";
+import CreateTask from "./CreateTask";
 
 type Props = {
   taskModal: boolean;
@@ -37,6 +37,22 @@ const TaskModal = ({
   const [status, setStatus] = useState(task.status);
   const [newColIndex, setNewColIndex] = useState(columns.indexOf(col));
   const [dropdown, setDropdown] = useState(false);
+  const [editTask, setEditTask] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setDropdown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
@@ -62,6 +78,10 @@ const TaskModal = ({
     setTaskModal(false);
   };
 
+  const openEditTask = () => {
+    setEditTask(true);
+  };
+
   return (
     <Modal open={taskModal} onClose={handleClose}>
       <Box
@@ -72,9 +92,11 @@ const TaskModal = ({
           bgcolor: "#2b2c37",
           position: "relative",
         }}
-        component="form"
       >
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "space-between" }}
+          ref={ref}
+        >
           <Typography variant="h2" sx={{ fontSize: 25, color: "white" }}>
             {task.title}
           </Typography>
@@ -149,7 +171,10 @@ const TaskModal = ({
                 borderRadius: "5px",
               }}
             >
-              <Typography sx={{ mt: 2, color: "white", cursor: "pointer" }}>
+              <Typography
+                sx={{ mt: 2, color: "white", cursor: "pointer" }}
+                onClick={openEditTask}
+              >
                 Edit Task
               </Typography>
               <Typography
@@ -159,6 +184,16 @@ const TaskModal = ({
                 Delete Task
               </Typography>
             </Paper>
+          )}
+
+          {editTask && (
+            <CreateTask
+              createTaskModal={editTask}
+              setCreateTaskModal={setEditTask}
+              type="edit"
+              taskIndex={taskIndex}
+              prevColIndex={colIndex}
+            />
           )}
         </Box>
       </Box>

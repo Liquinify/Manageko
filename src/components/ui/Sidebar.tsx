@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
 import boardSlice from "@/store/features/boardSlice";
 import { useBoard } from "@/hooks/useBoard";
-import CreateBoard from "./modals/CreateBoard";
+import CreateBoard from "../modals/CreateBoard";
 
 const Sidebar = () => {
   const { boards, dispatch } = useBoard();
@@ -25,7 +25,7 @@ const Sidebar = () => {
           sx={{ pl: 6, fontSize: 45, color: "#fff", pt: 3 }}
           variant="h1"
         >
-          TaskSwift
+          Taskswift
         </Typography>
         <Typography sx={{ pl: 6, color: "lightgray", pt: 5 }}>
           ALL BOARDS ({boards?.length})

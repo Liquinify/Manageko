@@ -18,14 +18,15 @@ type newColumns = {
   task: [];
   id: Date;
 };
-type changeColumnsType = "add" | "edit";
 
 const EditBoard = ({
   columnModal,
   setColumnModal,
+  type,
 }: {
   columnModal: boolean;
   setColumnModal: React.Dispatch<SetStateAction<boolean>>;
+  type: "add" | "edit";
 }) => {
   const { selectedBoard, dispatch } = useBoard();
   const [newColumns, setNewColumns] = useState([
@@ -33,8 +34,6 @@ const EditBoard = ({
     { name: "Stuff", tasks: [], id: Date.now() },
   ]);
   const { register, handleSubmit, setValue } = useForm();
-
-  let type: changeColumnsType = "edit";
 
   useEffect(() => {
     if (type === "edit") {
@@ -45,17 +44,16 @@ const EditBoard = ({
       );
       setValue("name", selectedBoard.name);
     }
-  }, [type, selectedBoard, setValue]);
+  }, [type, selectedBoard]);
 
   const onSubmit: SubmitHandler<FieldValues> = (formData) => {
     const { name } = formData;
-    setValue("name", "");
-    console.log(name);
     if (type === "add") {
       dispatch(boardSlice.actions.addNewBoard({ name, newColumns }));
     } else {
       dispatch(boardSlice.actions.editBoard({ name, newColumns }));
     }
+    setValue("name", selectedBoard.name);
     setColumnModal(false);
   };
 

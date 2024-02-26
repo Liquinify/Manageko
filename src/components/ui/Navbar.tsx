@@ -6,11 +6,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useBoard } from "@/hooks/useBoard";
-import CreateTask from "./modals/CreateTask";
-import EditBoard from "./modals/EditBoard";
+import CreateTask from "../modals/CreateTask";
+import EditBoard from "../modals/EditBoard";
 import boardSlice from "@/store/features/boardSlice";
 
 const Navbar = () => {
@@ -18,6 +18,21 @@ const Navbar = () => {
   const [createTaskModal, setCreateTaskModal] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setDropdown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleOpen = () => setCreateTaskModal(true);
   const handleDropdown = () => setDropdown((state) => !state);
@@ -30,6 +45,10 @@ const Navbar = () => {
   const onDeleteBtnClick = () => {
     dispatch(boardSlice.actions.deleteBoard());
     dispatch(boardSlice.actions.setBoardActive({ index: 0 }));
+  };
+
+  const clearBoard = () => {
+    dispatch(boardSlice.actions.clearBoard());
   };
 
   return (
@@ -45,6 +64,7 @@ const Navbar = () => {
         left: "15.9%",
         borderBottom: "1px solid gray",
       }}
+      ref={ref}
     >
       <CssBaseline />
       <Box
@@ -80,6 +100,9 @@ const Navbar = () => {
         <CreateTask
           createTaskModal={createTaskModal}
           setCreateTaskModal={setCreateTaskModal}
+          type="add"
+          taskIndex={0}
+          prevColIndex={0}
         />
       )}
 
@@ -100,9 +123,12 @@ const Navbar = () => {
             onClick={handleEditBoard}
             sx={{ mt: 2.5, color: "white", cursor: "pointer" }}
           >
-            Edit Task
+            Edit Board
           </Typography>
-          <Typography sx={{ mt: 2.5, color: "white", cursor: "pointer" }}>
+          <Typography
+            sx={{ mt: 2.5, color: "white", cursor: "pointer" }}
+            onClick={clearBoard}
+          >
             Clear Board
           </Typography>
           <Typography
@@ -111,14 +137,15 @@ const Navbar = () => {
           >
             Delete Board
           </Typography>
-          <Typography sx={{ mt: 2.5, color: "red", cursor: "pointer" }}>
-            Delete Task
-          </Typography>
         </Paper>
       )}
 
       {editModal && (
-        <EditBoard columnModal={editModal} setColumnModal={setEditModal} />
+        <EditBoard
+          columnModal={editModal}
+          setColumnModal={setEditModal}
+          type="edit"
+        />
       )}
     </Box>
   );

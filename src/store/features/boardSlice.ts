@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from "@/data.json";
-import produce from "immer";
 
 const boardSlice = createSlice({
   name: "boards",
@@ -29,9 +28,9 @@ const boardSlice = createSlice({
       const { title, status, description, subtasks, newColIndex } =
         action.payload;
       const task = [title, description, status, subtasks];
-      const selectedBoard = task.find((board: any) => board.isActive);
+      const selectedBoard = task.find((board) => board.isActive);
       const column = selectedBoard.find(
-        (_: unknown, index) => index === newColIndex
+        (_: unknown, index: number) => index === newColIndex
       );
       column.tasks.push(task);
     },
@@ -53,7 +52,7 @@ const boardSlice = createSlice({
       const payload = action.payload;
       const currentBoard = state.find((board) => board.isActive);
       const columns = currentBoard.columns;
-      const col = columns.find((col, i) => i === payload.colIndex);
+      const col = columns.find((_, i) => i === payload.colIndex);
       if (payload.colIndex === payload.newColIndex) return;
       const task = col.tasks.find((task, i) => i === payload.taskIndex);
       task.status = payload.status;
@@ -62,19 +61,53 @@ const boardSlice = createSlice({
       newCol.tasks.push(task);
     },
     addNewTask: (state, action) => {
-      const { name, description, selectedColumn, subtasks } = action.payload;
+      const { title, description, selectedColumn, subtasks } = action.payload;
       const currentBoard = state.find((board) => board.isActive);
       const currentColumn = currentBoard?.columns.find(
         (col) => col.name === selectedColumn
       );
       const newTask = {
-        title: name,
+        title,
         description,
         status: selectedColumn,
         subtasks,
       };
       currentColumn?.tasks.push(newTask);
     },
+    editTask: (state, action) => {
+      const {
+        title,
+        status,
+        description,
+        subtasks,
+        prevColIndex,
+        newColIndex,
+        taskIndex,
+      } = action.payload;
+      const activeBoard = state.find((board) => board.isActive);
+      if (!activeBoard) return;
+      const prevColumn = activeBoard.columns[prevColIndex];
+      if (!prevColumn) return;
+      const taskToEdit = prevColumn.tasks[taskIndex];
+      if (!taskToEdit) return;
+
+      taskToEdit.title = title;
+      taskToEdit.status = status;
+      taskToEdit.description = description;
+      taskToEdit.subtasks = subtasks;
+
+      if (prevColIndex !== newColIndex) {
+        prevColumn.tasks.splice(taskIndex, 1);
+
+        // Find the new column
+        const newColumn = activeBoard.columns[newColIndex];
+        if (!newColumn) return; // Check if new column is found
+
+        // Add task to new column
+        newColumn.tasks.push(taskToEdit);
+      }
+    },
+
     deleteBoard: (state) => {
       const activeBoard = state.find((board) => board.isActive);
       if (activeBoard) {
@@ -92,6 +125,10 @@ const boardSlice = createSlice({
           (_, i) => i !== payload.taskIndex
         );
       }
+    },
+    clearBoard: (state) => {
+      const currentBoard = state.find((board) => board.isActive);
+      if (currentBoard) currentBoard.columns = [];
     },
   },
 });

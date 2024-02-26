@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Column from "./Column";
 import { Box, Button } from "@mui/material";
 import { useBoard } from "@/hooks/useBoard";
-import EditBoard from "./modals/EditBoard";
+import EditBoard from "../modals/EditBoard";
 
 const Board = () => {
   const { selectedBoard } = useBoard();
@@ -36,7 +36,11 @@ const Board = () => {
         + New Column
       </Button>
       {columnModal && (
-        <EditBoard columnModal={columnModal} setColumnModal={setColumnModal} />
+        <EditBoard
+          columnModal={columnModal}
+          setColumnModal={setColumnModal}
+          type="edit"
+        />
       )}
     </Box>
   );
