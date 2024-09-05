@@ -1,0 +1,41 @@
+.task {
+  background: white;
+  width: 20rem;
+  height: 14rem;
+  margin-top: 1.5rem;
+  margin-right: 2rem;
+  border-radius: 5px;
+  border: 1px solid gray;
+  cursor: pointer;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  & > h2 {
+    padding-top: 1rem;
+    font-size: 1.5rem;
+    padding-left: 1rem;
+  }
+
+  & > h3 {
+    padding-top: 1rem;
+    margin-left: 1rem;
+    font-size: 14px;
+    color: gray;
+  }
+
+  & > h4 {
+    border: 1px solid lightgray;
+    background-color: lightgray;
+    width: 5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    margin-left: 1rem;
+  }
+}

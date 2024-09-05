@@ -1,0 +1,37 @@
+.modal {
+  & > form {
+    & > label {
+      margin-top: 2px;
+    }
+
+    & > section {
+      display: "flex";
+      flex-direction: "column";
+      justify-content: "flex-start";
+      margin-top: 2px;
+
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        & > button {
+          border-radius: 50px;
+          height: 3rem;
+          color: #635fc7;
+        }
+      }
+    }
+  }
+
+  & > input {
+    width: 15rem;
+    margin-top: 1;
+    height: 2.8rem;
+    background: none;
+    &::placeholder {
+      color: "gray";
+    }
+  }
+}

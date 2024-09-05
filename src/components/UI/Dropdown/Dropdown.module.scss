@@ -1,0 +1,19 @@
+.dropdown {
+  position: absolute;
+  width: 20rem;
+  height: 11rem;
+  background: #2b2c37;
+  top: 10%;
+  left: 87.5%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+
+  & > p {
+    margin-top: 2.5px;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+  }
+}

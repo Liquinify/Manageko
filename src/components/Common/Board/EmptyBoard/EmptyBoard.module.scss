@@ -1,0 +1,17 @@
+.board {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 47%;
+
+  & > h1 {
+    color: gray;
+    font-size: 20px;
+  }
+
+  & > button {
+    margin-top: 3px;
+  }
+}

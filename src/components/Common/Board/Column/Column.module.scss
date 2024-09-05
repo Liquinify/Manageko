@@ -1,0 +1,44 @@
+.column {
+  & > header {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1rem;
+    align-items: center;
+    background: hsl(180, 52%, 80%);
+    height: 3rem;
+    width: 20rem;
+    border-radius: 5px;
+
+    & > div {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+
+      & > input {
+        border-radius: 50%;
+      }
+
+      & > p {
+        font-size: 1.2rem;
+      }
+
+      & > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: lightblue;
+        border-radius: 5px;
+      }
+    }
+
+    & > button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+}

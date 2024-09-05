@@ -1,0 +1,49 @@
+.modal {
+  & > form {
+    box-shadow: 24px;
+    padding: 4px;
+  }
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 2px;
+  }
+
+  & > div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+
+  & > h6 {
+    color: "white";
+  }
+
+  & > label {
+    margin-top: 2px;
+  }
+
+  & > select {
+    height: 3rem;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  & > input {
+    width: 100%;
+    margin-top: 1px;
+    height: 2.8rem;
+
+    &::placeholder {
+      color: gray;
+    }
+  }
+
+  & > button {
+    border-radius: 50px;
+    height: 3rem;
+  }
+}
