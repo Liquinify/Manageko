@@ -1,30 +1,20 @@
 # Manageko
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Manageko is a front-end task manager made with:
 
-Currently, two official plugins are available:
+- React
+- Typescript
+- Redux Toolkit
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Features
 
-## Expanding the ESLint configuration
+- Flexible tasks and columns with drag & drop made using DndKit(https://github.com/clauderic/dnd-kit)
+- View, modify, create and remove boards and tasks
+- Search through existing tasks by their name
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Why did I make this?
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json", "./tsconfig.app.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Learn how to make drag & drop UIs
+- Get more practice making front-end applications
+- Practice implementing persist to a project
+- I wanted to create my own simple task manager without confusing things
