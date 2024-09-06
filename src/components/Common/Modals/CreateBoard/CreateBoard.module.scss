@@ -1,32 +1,75 @@
 .modal {
-  & > form {
-    & > h2 {
-      padding-top: 1rem;
-    }
+  background-color: #f9f9f9;
 
-    & > input {
-      width: 100%;
-      margin-top: 1rem;
-      height: 2.8rem;
-      background: none;
-      &::placeholder {
-        color: "gray";
-      }
-    }
+  & > h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 
-    & > label {
-      font-size: 14px;
-      margin-top: 2px;
-    }
+  & > input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  & > section {
     & > div {
       display: flex;
-      flex-direction: column;
-    }
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
 
-    & > section {
-      display: flex;
-      flex-direction: column;
+      & > input {
+        width: 85%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      & > svg {
+        font-size: 1.5rem;
+        color: #ff4d4f;
+
+        &:hover {
+          cursor: pointer;
+          color: #ff1a1a;
+        }
+      }
+
+      & > button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        height: 2rem;
+        width: 10rem;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #218838;
+        }
+      }
+    }
+  }
+
+  & > button {
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    height: 2rem;
+    width: 10rem;
+
+    &:hover {
+      background-color: #0056b3;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
   }
 }

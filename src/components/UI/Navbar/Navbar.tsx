@@ -29,7 +29,7 @@ const Navbar = () => {
               onClick={handleOpen}
               disabled={!selectedBoard.columns.length}
             >
-              + Add new task
+              + New
             </button>
           </div>
         </section>

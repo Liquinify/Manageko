@@ -1,12 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import boardSlice from "./features/boardSlice";
 import themeSlice from "./features/themeSlice";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const rootReducers = combineReducers({
+  boards: boardSlice.reducer,
+  theme: themeSlice.reducer,
+});
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducers);
 
 export const store = configureStore({
-  reducer: {
-    boards: boardSlice.reducer,
-    theme: themeSlice.reducer,
-  },
+  reducer: persistedReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

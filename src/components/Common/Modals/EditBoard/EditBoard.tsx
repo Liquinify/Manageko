@@ -10,17 +10,14 @@ import { v4 as uuidv4 } from "uuid";
 const EditBoard = ({
   columnModal,
   setColumnModal,
-  type,
 }: {
   columnModal: boolean;
   setColumnModal: React.Dispatch<SetStateAction<boolean>>;
-  type: "add" | "edit";
 }) => {
   const { selectedBoard, dispatch } = useBoard();
   const [boardName, setBoardName] = useState(selectedBoard.name);
 
-  const { newColumns, setNewColumns, onChange, deleteTask } =
-    useEditBoard(type);
+  const { newColumns, setNewColumns, onChange, deleteTask } = useEditBoard();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +30,7 @@ const EditBoard = ({
   return (
     <ModalWrapper shown={columnModal} close={handleClose}>
       <form onSubmit={handleSubmit} className={style.modal}>
-        <h2>Edit Board</h2>
+        <h1>Edit Board</h1>
         <label>Board Name</label>
         <input
           value={boardName}
@@ -64,9 +61,9 @@ const EditBoard = ({
             >
               + Add New Column
             </button>
-            <button type="submit">Save Changes</button>
           </div>
         </section>
+        <button type="submit">Save Changes</button>
       </form>
     </ModalWrapper>
   );

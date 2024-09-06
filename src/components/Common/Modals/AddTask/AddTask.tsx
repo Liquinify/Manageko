@@ -72,7 +72,7 @@ const AddTask = ({ createTaskModal, setCreateTaskModal }: Props) => {
   return (
     <ModalWrapper shown={createTaskModal} close={handleClose}>
       <form onSubmit={handleNewTask} className={style.modal}>
-        <h6>Add New Task</h6>
+        <h1>Add New Task</h1>
         <label>Title</label>
         <input
           name="title"
@@ -85,7 +85,7 @@ const AddTask = ({ createTaskModal, setCreateTaskModal }: Props) => {
           name="description"
           onChange={handleInputChange}
           value={taskData.description}
-          placeholder="e.g Start learning new things"
+          placeholder="e.g Learning new things will make me better"
         />
         <section>
           <label>Subtasks</label>
@@ -112,17 +112,13 @@ const AddTask = ({ createTaskModal, setCreateTaskModal }: Props) => {
             >
               + Add New Subtask
             </button>
-            <label>Status</label>
-            <select
-              onChange={onSelectChange}
-              style={{ height: "3rem", marginTop: "1rem", width: "100%" }}
-              value={status}
-            >
-              {columns.map((col: { name: string }, index: number) => (
-                <option key={index}>{col.name}</option>
-              ))}
-            </select>
           </div>
+          <label>Status</label>
+          <select onChange={onSelectChange} value={status}>
+            {columns.map((col: { name: string }, index: number) => (
+              <option key={index}>{col.name}</option>
+            ))}
+          </select>
         </section>
         <button type="submit">Create Task</button>
       </form>

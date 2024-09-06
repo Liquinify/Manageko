@@ -3,7 +3,7 @@ import { useBoard } from "./useBoard";
 import { newColumns } from "../types/columns/newColumns";
 import { v4 as uuidv4 } from "uuid";
 
-export const useEditBoard = (type: string) => {
+export const useEditBoard = () => {
   const [newColumns, setNewColumns] = useState([
     { id: uuidv4(), name: "Todo", tasks: [] },
   ]);
@@ -11,14 +11,12 @@ export const useEditBoard = (type: string) => {
   const { selectedBoard } = useBoard();
 
   useEffect(() => {
-    if (type === "edit") {
-      setNewColumns(
-        selectedBoard.columns.map((col: newColumns) => {
-          return { ...col, id: uuidv4() };
-        })
-      );
-    }
-  }, [type, selectedBoard]);
+    setNewColumns(
+      selectedBoard.columns.map((col: newColumns) => {
+        return { ...col, id: uuidv4() };
+      })
+    );
+  }, [selectedBoard]);
 
   const onChange = (id: string, newValue: string) => {
     setNewColumns((prevState) => {

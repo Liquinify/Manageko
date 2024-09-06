@@ -1,37 +1,74 @@
 .modal {
-  & > form {
-    & > label {
-      margin-top: 2px;
+  background-color: #f9f9f9;
+
+  & > h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  & > input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    &::placeholder {
+      color: #aaa;
     }
+  }
 
-    & > section {
-      display: "flex";
-      flex-direction: "column";
-      justify-content: "flex-start";
-      margin-top: 2px;
+  & > section {
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
 
-      & > div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
+      & > input {
+        width: 85%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
 
-        & > button {
-          border-radius: 50px;
-          height: 3rem;
-          color: #635fc7;
+      & > svg {
+        font-size: 1.5rem;
+        color: #ff4d4f;
+
+        &:hover {
+          cursor: pointer;
+          color: #ff1a1a;
+        }
+      }
+
+      & > button {
+        padding: 0.5rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #218838;
         }
       }
     }
   }
 
-  & > input {
-    width: 15rem;
-    margin-top: 1;
-    height: 2.8rem;
-    background: none;
-    &::placeholder {
-      color: "gray";
+  & > button {
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    height: 2.5rem;
+    width: 7rem;
+
+    &:hover {
+      background-color: #0056b3;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
   }
 }

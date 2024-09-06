@@ -25,11 +25,7 @@ const Column = ({ column }: { column: TColumns }) => {
       ))}
 
       {columnModal && (
-        <EditBoard
-          columnModal={columnModal}
-          setColumnModal={setColumnModal}
-          type="edit"
-        />
+        <EditBoard columnModal={columnModal} setColumnModal={setColumnModal} />
       )}
     </main>
   );

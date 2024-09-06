@@ -6,7 +6,7 @@ import { Tasks } from "../../types/tasks/tasks";
 const boards = [
   {
     id: uuidv4(),
-    name: "Platform Launch",
+    name: "Test",
     isActive: true,
     columns: [
       {
@@ -19,13 +19,7 @@ const boards = [
             description:
               "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
             status: "Todo",
-            subtasks: [
-              {
-                id: uuidv4(),
-                title: "Making a coffee",
-                isCompleted: false,
-              },
-            ],
+            subtasks: [],
           },
         ],
       },

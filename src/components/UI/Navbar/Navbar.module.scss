@@ -28,10 +28,10 @@
 
         & > svg {
           position: absolute;
-          left: 77.7%;
+          left: 80.6%;
           top: 69%;
-          z-index: 2;
           color: gray;
+          z-index: 2;
         }
 
         & > input {
@@ -40,11 +40,10 @@
           width: 10rem;
           border-radius: 3px;
           outline: none;
-          padding: 0 35px;
+          padding: 0 30px;
           border: none;
           color: #333333;
           background-color: #eef6f6;
-          z-index: 1;
 
           &:focus {
             border: 1px solid lightgray;
@@ -54,8 +53,8 @@
 
         & > button:nth-child(3) {
           height: 2rem;
-          width: 9rem;
-          background-color: blue;
+          width: 6rem;
+          background: black;
           color: white;
           border-radius: 10px;
           border: none;
@@ -65,9 +64,15 @@
           }
         }
 
-        & > button:nth-last-child(n + 2) {
+        & > button:nth-child(2) {
           background: transparent;
           border: none;
+        }
+
+        & > button:nth-child(1) {
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid gray;
         }
       }
     }

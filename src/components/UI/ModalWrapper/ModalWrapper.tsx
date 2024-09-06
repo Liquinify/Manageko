@@ -10,21 +10,21 @@ type Props = {
 
 const ModalWrapper = ({ children, shown, close }: Props) => {
   return shown ? (
-    <div
+    <main
       className={style.modal}
       onClick={() => {
-        close(); // close modal when outside of modal is clicked
+        close();
       }}
     >
       <div
         onClick={(e) => {
-          e.stopPropagation(); // do not close modal if anything inside modal content is clicked
+          e.stopPropagation();
         }}
       >
         {children}
-        <MdOutlineClear cursor={"pointer"} fontSize={25} onClick={close} />
+        <MdOutlineClear onClick={close} />
       </div>
-    </div>
+    </main>
   ) : null;
 };
 

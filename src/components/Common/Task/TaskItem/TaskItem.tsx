@@ -38,22 +38,25 @@ const TaskItem = ({ task, column }: Props) => {
       completedTasks++;
     }
   });
+
   return (
-    <article
-      onClick={handleOpen}
-      className={style.task}
-      style={transitionStyle}
-    >
-      <h2>{task.title}</h2>
-      <h3>
-        {task.description ? task.description : "No description provided."}
-      </h3>
-      <h4>
-        <CiCircleList />
-        <span>
-          {completedTasks} / {subtasks.length}
-        </span>
-      </h4>
+    <>
+      <article
+        onClick={handleOpen}
+        className={style.task}
+        style={transitionStyle}
+      >
+        <h2>{task.title}</h2>
+        <h3>
+          {task.description ? task.description : "No description provided."}
+        </h3>
+        <h4>
+          <CiCircleList />
+          <span>
+            {completedTasks} / {subtasks.length}
+          </span>
+        </h4>
+      </article>
       {taskModal && (
         <TaskModal
           taskModal={taskModal}
@@ -63,7 +66,7 @@ const TaskItem = ({ task, column }: Props) => {
           completedTasks={completedTasks}
         />
       )}
-    </article>
+    </>
   );
 };
 

@@ -64,11 +64,7 @@ const Sidebar = () => {
         <Dropdown setDropdown={setDropdown} setEditModal={setEditBoard} />
       )}
       {editBoard && (
-        <EditBoard
-          columnModal={editBoard}
-          setColumnModal={setEditBoard}
-          type="edit"
-        />
+        <EditBoard columnModal={editBoard} setColumnModal={setEditBoard} />
       )}
     </aside>
   );

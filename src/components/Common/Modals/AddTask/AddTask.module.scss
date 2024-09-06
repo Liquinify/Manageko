@@ -1,43 +1,97 @@
 .modal {
-  & > form {
-    box-shadow: 24px;
-    padding: 4px;
-  }
+  padding: 1rem;
+  background-color: #f9f9f9;
 
-  & > section {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-top: 2px;
-  }
-
-  & > div {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-  }
-
-  & > h6 {
-    color: "white";
+  & > h1 {
+    font-size: 2rem;
+    font-weight: bold;
   }
 
   & > label {
-    margin-top: 2px;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
   }
 
   & > input {
     width: 100%;
-    margin-top: 1px;
-    height: 2.8rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 
     &::placeholder {
-      color: gray;
+      color: #aaa;
     }
   }
 
   & > button {
-    border-radius: 50px;
-    height: 3rem;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+
+    &:hover {
+      background-color: #0056b3;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  & > section {
+    border-radius: 8px;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+
+      & > input {
+        width: 85%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      & > svg {
+        font-size: 1.5rem;
+        color: #ff4d4f;
+
+        &:hover {
+          cursor: pointer;
+          color: #ff1a1a;
+        }
+      }
+
+      & > button {
+        padding: 0.5rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #218838;
+        }
+      }
+    }
+
+    & > select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    & > label {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
   }
 }

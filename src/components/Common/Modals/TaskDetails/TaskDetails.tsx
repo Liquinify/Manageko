@@ -40,14 +40,14 @@ const TaskModal = ({
   };
 
   const handleClose = () => {
-    dispatch(
-      boardSlice.actions.setTaskStatus({
-        colIndex: column.id,
-        taskIndex: task.id,
-        newColIndex,
-        status,
-      })
-    );
+    // dispatch(
+    //   boardSlice.actions.setTaskStatus({
+    //     colIndex: column.id,
+    //     taskIndex: task.id,
+    //     newColIndex,
+    //     status,
+    //   })
+    // );
     setTaskModal(false);
   };
 
@@ -97,8 +97,8 @@ const TaskModal = ({
             ))}
           </select>
           {dropdown && (
-            <div>
-              <h2 onClick={openEditTask}>Edit Task</h2>
+            <div className={style.dropdown}>
+              <p onClick={openEditTask}>Edit Task</p>
               <p onClick={deleteTask}>Delete Task</p>
             </div>
           )}

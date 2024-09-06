@@ -64,7 +64,7 @@ const EditTask = ({
 
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
-    setNewColIndex(e.target.selectedIndex);
+    setNewColIndex(e.target.value);
   };
 
   const handleTask = (e: FormEvent) => {
@@ -94,7 +94,7 @@ const EditTask = ({
   return (
     <ModalWrapper shown={createTaskModal} close={handleClose}>
       <form onSubmit={handleTask} className={style.modal}>
-        <h6>Edit Task</h6>
+        <h1>Edit Task</h1>
         <label>Title</label>
         <input
           name="title"
@@ -132,13 +132,13 @@ const EditTask = ({
             >
               + Add New Subtask
             </button>
-            <label>Status</label>
-            <select onChange={onSelectChange} value={status}>
-              {columns.map((col: { name: string }, index: number) => (
-                <option key={index}>{col.name}</option>
-              ))}
-            </select>
           </div>
+          <label>Status</label>
+          <select onChange={onSelectChange} value={status}>
+            {columns.map((col: { name: string }, index: number) => (
+              <option key={index}>{col.name}</option>
+            ))}
+          </select>
         </section>
         <button type="submit">Save Changes</button>
       </form>

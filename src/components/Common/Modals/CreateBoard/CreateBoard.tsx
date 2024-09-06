@@ -28,44 +28,42 @@ const CreateBoard = ({
 
   return (
     <ModalWrapper shown={openModal} close={handleClose}>
-      <article className={style.modal}>
-        <form onSubmit={onSubmit} onClick={(e) => e.stopPropagation()}>
-          <h2>Add New Board</h2>
-          <label>Board Name</label>
-          <input
-            onChange={(e) => setBoardName(e.target.value)}
-            placeholder="e.g Roadmap"
-          />
-          <div>
-            <label>Board Columns</label>
-            {columns.map((column, index: number) => (
-              <div key={index}>
-                <input
-                  value={column.name}
-                  onChange={(e) => {
-                    onChange(column.id, e.target.value);
-                  }}
-                />
-                <MdOutlineClear onClick={() => deleteTask(column.id)} />
-              </div>
-            ))}
-            <div>
-              <button
-                type="button"
-                onClick={() => {
-                  setColumns((state) => [
-                    ...state,
-                    { id: uuidv4(), name: "", tasks: [] },
-                  ]);
+      <form onSubmit={onSubmit} className={style.modal}>
+        <h1>Add New Board</h1>
+        <label>Board Name</label>
+        <input
+          onChange={(e) => setBoardName(e.target.value)}
+          placeholder="e.g Roadmap"
+        />
+        <section>
+          <label>Board Columns</label>
+          {columns.map((column) => (
+            <div key={column.id}>
+              <input
+                value={column.name}
+                onChange={(e) => {
+                  onChange(column.id, e.target.value);
                 }}
-              >
-                + Add New Column
-              </button>
-              <button type="submit">Create New Board</button>
+              />
+              <MdOutlineClear onClick={() => deleteTask(column.id)} />
             </div>
+          ))}
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                setColumns((state) => [
+                  ...state,
+                  { id: uuidv4(), name: "", tasks: [] },
+                ]);
+              }}
+            >
+              + Add New Column
+            </button>
           </div>
-        </form>
-      </article>
+        </section>
+        <button type="submit">Create New Board</button>
+      </form>
     </ModalWrapper>
   );
 };

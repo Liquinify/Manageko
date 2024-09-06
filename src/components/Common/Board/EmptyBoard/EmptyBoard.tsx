@@ -14,7 +14,6 @@ const EmptyBoard = () => {
         <EditBoard
           columnModal={createColumn}
           setColumnModal={setCreateColumn}
-          type="add"
         />
       )}
     </section>
