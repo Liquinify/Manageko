@@ -1,12 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import boardSlice from "./features/boardSlice";
-import themeSlice from "./features/themeSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const rootReducers = combineReducers({
   boards: boardSlice.reducer,
-  theme: themeSlice.reducer,
 });
 
 const persistConfig = {

@@ -22,8 +22,8 @@ const ModalWrapper = ({ children, shown, close }: Props) => {
         }}
       >
         {children}
-        <MdOutlineClear onClick={close} />
       </div>
+      <MdOutlineClear onClick={close} />
     </main>
   ) : null;
 };

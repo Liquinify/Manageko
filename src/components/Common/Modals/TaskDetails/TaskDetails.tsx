@@ -28,8 +28,8 @@ const TaskModal = ({
   const { selectedBoard, dispatch } = useBoard();
   const columns = selectedBoard.columns;
 
-  const [status, setStatus] = useState(columns[0].name);
-  const [newColIndex, setNewColIndex] = useState("2");
+  const [status, setStatus] = useState<string>(task.status);
+  const [newColIndex, setNewColIndex] = useState<string>(column.id);
   const [dropdown, setDropdown] = useState(false);
   const [editTask, setEditTask] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -40,14 +40,14 @@ const TaskModal = ({
   };
 
   const handleClose = () => {
-    // dispatch(
-    //   boardSlice.actions.setTaskStatus({
-    //     colIndex: column.id,
-    //     taskIndex: task.id,
-    //     newColIndex,
-    //     status,
-    //   })
-    // );
+    dispatch(
+      boardSlice.actions.setTaskStatus({
+        colIndex: column.id,
+        taskIndex: task.id,
+        newColIndex,
+        status,
+      })
+    );
     setTaskModal(false);
   };
 
@@ -93,7 +93,9 @@ const TaskModal = ({
           <h2>Current Status</h2>
           <select value={status} onChange={onStatusChange}>
             {columns.map((col: { id: number; name: string }) => (
-              <option key={col.id}>{col.name}</option>
+              <option value={col.id} key={col.id}>
+                {col.name}
+              </option>
             ))}
           </select>
           {dropdown && (

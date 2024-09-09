@@ -1,8 +1,6 @@
 import { useState } from "react";
 import TaskModal from "../../Modals/TaskDetails/TaskDetails";
 import { CiCircleList } from "react-icons/ci";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { Tasks } from "../../../../types/tasks/tasks";
 import { TColumns } from "../../../../types/columns/column";
 import style from "./TaskItem.module.scss";
@@ -19,14 +17,6 @@ const TaskItem = ({ task, column }: Props) => {
 
   const [taskModal, setTaskModal] = useState(false);
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: task.id });
-
-  const transitionStyle = {
-    transition,
-    transform: CSS.Transform.toString(transform),
-  };
-
   const handleOpen = () => {
     if (!taskModal) {
       setTaskModal(true);
@@ -41,11 +31,7 @@ const TaskItem = ({ task, column }: Props) => {
 
   return (
     <>
-      <article
-        onClick={handleOpen}
-        className={style.task}
-        style={transitionStyle}
-      >
+      <article onClick={handleOpen} className={style.task}>
         <h2>{task.title}</h2>
         <h3>
           {task.description ? task.description : "No description provided."}

@@ -4,7 +4,6 @@ import style from "./Sidebar.module.scss";
 import { useBoard } from "../../../hooks/useBoard";
 import boardSlice from "../../../store/features/boardSlice";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { MdMoreVert } from "react-icons/md";
 import Dropdown from "../Dropdown/Dropdown";
 import EditBoard from "../../Common/Modals/EditBoard/EditBoard";
 import { newBoard } from "../../../types/board/newBoard";
@@ -18,7 +17,6 @@ const Sidebar = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handleOpen = () => setOpenModal(true);
-  const handleDropdown = () => setDropdown((state) => !state);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);

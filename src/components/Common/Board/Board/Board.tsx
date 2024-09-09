@@ -1,8 +1,6 @@
 import Columns from "../Column/Column";
 import style from "./Board.module.scss";
 import { useBoard } from "../../../../hooks/useBoard";
-import { DndContext } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
 import { TColumns } from "../../../../types/columns/column";
 
 const Board = () => {

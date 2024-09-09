@@ -11,10 +11,9 @@ const Column = ({ column }: { column: TColumns }) => {
   const handleOpen = () => setColumnModal(true);
 
   return (
-    <main className={style.column}>
+    <main className={style.column} data-testid="column">
       <header>
         <div>
-          <input type="radio" name="" id="" />
           <p>{column.name}</p>
           <span>{column.tasks.length}</span>
         </div>
@@ -23,7 +22,6 @@ const Column = ({ column }: { column: TColumns }) => {
       {column.tasks.map((task: Tasks) => (
         <TaskItem key={task.id} task={task} column={column} />
       ))}
-
       {columnModal && (
         <EditBoard columnModal={columnModal} setColumnModal={setColumnModal} />
       )}

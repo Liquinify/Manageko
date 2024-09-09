@@ -16,6 +16,10 @@
       padding-left: 2rem;
     }
 
+    & > svg {
+      width: 5rem;
+    }
+
     &:last-of-type {
       display: flex;
       justify-content: space-between;
