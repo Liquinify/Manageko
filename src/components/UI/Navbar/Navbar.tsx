@@ -6,6 +6,8 @@ import { FaSearch } from "react-icons/fa";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import Dropdown from "../Dropdown/Dropdown";
 import EditBoard from "../../Common/Modals/EditBoard/EditBoard";
+import controlsSlice from "../../../store/features/controlsSlice";
+import { useAppDispatch } from "../../../hooks/useRedux";
 
 const Navbar = () => {
   const { selectedBoard } = useBoard();
@@ -15,6 +17,13 @@ const Navbar = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handleOpen = () => setCreateTaskModal(true);
+
+  const dispatch = useAppDispatch();
+
+  const handleBoardType = (e: any) => {
+    const buttonName = e.target.name;
+    dispatch(controlsSlice.actions.setBoardType(buttonName));
+  };
 
   return (
     <>
@@ -29,8 +38,12 @@ const Navbar = () => {
         </section>
         <section>
           <div>
-            <button>Kanban</button>
-            <button>List</button>
+            <button name="Kanban" onClick={handleBoardType}>
+              Kanban
+            </button>
+            <button name="List" onClick={handleBoardType}>
+              List
+            </button>
           </div>
           <div>
             <FaSearch />

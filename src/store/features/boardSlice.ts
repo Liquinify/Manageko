@@ -117,10 +117,6 @@ const boardSlice = createSlice({
         (task) => task.id === taskIndex
       );
 
-      const updatedTask = {
-        // TODO: Put updated task here and push instead of mutating current one
-      };
-
       if (currentTask) {
         currentTask.title = title;
         currentTask.description = description;
