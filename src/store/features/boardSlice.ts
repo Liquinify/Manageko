@@ -124,6 +124,7 @@ const boardSlice = createSlice({
       }
     },
     deleteBoard: (state) => {
+      if (state.length === 1) return;
       const activeBoard = state.find((board) => board.isActive);
       if (activeBoard) state.splice(state.indexOf(activeBoard), 1);
     },

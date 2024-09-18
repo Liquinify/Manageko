@@ -1,19 +1,21 @@
 import { useState } from "react";
 import TaskModal from "../../Modals/TaskDetails/TaskDetails";
 import { CiCircleList } from "react-icons/ci";
-import { Tasks } from "../../../../types/tasks/tasks";
-import { TColumns } from "../../../../types/columns/column";
 import style from "./TaskItem.module.scss";
-import { TSubtasks } from "../../../../types/tasks/subtasks";
+import { Task } from "../../../../types/tasks/tasks";
+import { Column } from "../../../../types/columns/column";
+import { Subtask } from "../../../../types/tasks/subtasks";
+import { useAppSelector } from "../../../../hooks/useRedux";
 
 type Props = {
-  task: Tasks;
-  column: TColumns;
+  task: Task;
+  column: Column;
 };
 
 const TaskItem = ({ task, column }: Props) => {
   let completedTasks = 0;
   const subtasks = task.subtasks;
+  const boardType = useAppSelector((state) => state.controls.boardType);
 
   const [taskModal, setTaskModal] = useState(false);
 
@@ -23,7 +25,7 @@ const TaskItem = ({ task, column }: Props) => {
     }
   };
 
-  subtasks.forEach((subtask: TSubtasks) => {
+  subtasks.forEach((subtask: Subtask) => {
     if (subtask.isCompleted) {
       completedTasks++;
     }
@@ -31,7 +33,10 @@ const TaskItem = ({ task, column }: Props) => {
 
   return (
     <>
-      <article onClick={handleOpen} className={style.task}>
+      <article
+        onClick={handleOpen}
+        className={boardType === "Kanban" ? style.kanban : style.list}
+      >
         <h2>{task.title}</h2>
         <h3>
           {task.description ? task.description : "No description provided."}

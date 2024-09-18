@@ -12,6 +12,9 @@ const controlsSlice = createSlice({
     setBoardType: (state, action) => {
       state.boardType = action.payload;
     },
+    setSearchTask: (state, action) => {
+      state.search = action.payload;
+    },
   },
 });
 

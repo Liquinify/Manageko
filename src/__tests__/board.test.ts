@@ -1,5 +1,4 @@
 import boardSlice from "../store/features/boardSlice";
-import { v4 as uuidv4 } from "uuid";
 
 describe("board reducer", () => {
   const initialState = [

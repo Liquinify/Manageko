@@ -1,6 +1,6 @@
 import { useBoard } from "../../../../hooks/useBoard";
 import boardSlice from "../../../../store/features/boardSlice";
-import { TSubtasks } from "../../../../types/tasks/subtasks";
+import { Subtask } from "../../../../types/tasks/subtasks";
 import style from "./SubtaskList.module.scss";
 
 const SubtaskList = ({
@@ -10,7 +10,7 @@ const SubtaskList = ({
 }: {
   taskIndex: string;
   colIndex: string;
-  subtask: TSubtasks;
+  subtask: Subtask;
 }) => {
   const { dispatch } = useBoard();
   const subtaskId = subtask.id;

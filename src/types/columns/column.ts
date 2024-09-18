@@ -1,4 +1,4 @@
-export type TColumns = {
+export type Column = {
   id: string;
   name: string;
   tasks: [];

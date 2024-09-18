@@ -1,4 +1,4 @@
-export type TSubtasks = {
+export type Subtask = {
   id: number;
   isCompleted: boolean;
   title: string;

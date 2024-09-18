@@ -5,10 +5,11 @@
   width: 8rem;
   height: 7rem;
   top: 6%;
-  right: 0.5%;
+  right: 1.5%;
   border-radius: 5px;
   padding: 3px 5px;
   line-height: 35px;
+  z-index: 1;
 
   & > p {
     cursor: pointer;

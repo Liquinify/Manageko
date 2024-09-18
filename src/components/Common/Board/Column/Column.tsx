@@ -1,19 +1,22 @@
 import TaskItem from "../../Task/TaskItem/TaskItem";
 import style from "./Column.module.scss";
-import { Tasks } from "../../../../types/tasks/tasks";
-import { TColumns } from "../../../../types/columns/column";
 import { useState } from "react";
 import EditBoard from "../../Modals/EditBoard/EditBoard";
 import { useAppSelector } from "../../../../hooks/useRedux";
+import { Task } from "../../../../types/tasks/tasks";
+import { Column as Columns } from "../../../../types/columns/column";
 
-const Column = ({ column }: { column: TColumns }) => {
+const Column = ({ column }: { column: Columns }) => {
   const [columnModal, setColumnModal] = useState(false);
-  const boardType = useAppSelector((state) => state.boardType);
+  const boardType = useAppSelector((state) => state.controls.boardType);
+  const searchValue = useAppSelector((state) => state.controls.search);
 
   const handleOpen = () => setColumnModal(true);
 
   return (
-    <main className={style.column}>
+    <main
+      className={boardType === "Kanban" ? style.horizontal : style.vertical}
+    >
       <header>
         <div>
           <p>{column.name}</p>
@@ -21,13 +24,21 @@ const Column = ({ column }: { column: TColumns }) => {
         </div>
         <button onClick={handleOpen}>+</button>
       </header>
-      {boardType == undefined ? (
-        column.tasks.map((task: Tasks) => (
-          <TaskItem key={task.id} task={task} column={column} />
-        ))
-      ) : (
-        <p>Kek</p>
-      )}
+      {boardType == "Kanban"
+        ? column.tasks
+            .filter((task: Task) =>
+              task.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((task: Task) => (
+              <TaskItem key={task.id} task={task} column={column} />
+            ))
+        : column.tasks
+            .filter((task: Task) =>
+              task.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((task: Task) => (
+              <TaskItem key={task.id} task={task} column={column} />
+            ))}
       {columnModal && (
         <EditBoard columnModal={columnModal} setColumnModal={setColumnModal} />
       )}

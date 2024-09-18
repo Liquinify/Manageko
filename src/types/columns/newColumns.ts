@@ -1,4 +1,4 @@
-export type newColumns = {
+export type newColumn = {
   id: string;
   name: string;
   task: [];

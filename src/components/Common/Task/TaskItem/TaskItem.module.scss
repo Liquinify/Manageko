@@ -1,4 +1,4 @@
-.task {
+.kanban {
   background: white;
   width: 18rem;
   height: 14rem;
@@ -36,5 +36,35 @@
     align-items: center;
     border-radius: 5px;
     margin-left: 1rem;
+  }
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid lightgray;
+  width: 98rem;
+  height: 5rem;
+  padding-inline: 2rem;
+
+  & > h2 {
+    font-size: 1rem;
+  }
+
+  & > h3 {
+    font-size: 0.9rem;
+    color: gray;
+  }
+
+  & > h4 {
+    border: 1px solid lightgray;
+    background-color: lightgray;
+    width: 5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
   }
 }

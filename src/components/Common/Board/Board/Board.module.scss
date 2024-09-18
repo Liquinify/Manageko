@@ -1,7 +1,15 @@
-.board {
+.kanboard {
   display: flex;
   position: absolute;
   left: 17.5%;
   top: 18%;
   gap: 2rem;
+}
+
+.listboard {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 17.5%;
+  top: 13%;
 }
