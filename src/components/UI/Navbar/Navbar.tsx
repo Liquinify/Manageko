@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddTask from "../../Common/Modals/AddTask/AddTask";
 import style from "./Navbar.module.scss";
 import { useBoard } from "../../../hooks/useBoard";
@@ -16,6 +16,7 @@ const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const searchValue = useAppSelector((state) => state.controls.search);
+  const boardType = useAppSelector((state) => state.controls.boardType);
   const dispatch = useAppDispatch();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,10 +30,24 @@ const Navbar = () => {
     dispatch(controlsSlice.actions.setBoardType(buttonName));
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setDropdown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <nav className={style.navbar} ref={ref}>
-        <section>
+      <nav className={style.navbar}>
+        <section ref={ref}>
           <h1>{selectedBoard.name}</h1>
           <IoEllipsisHorizontal
             fontSize={30}
@@ -42,10 +57,18 @@ const Navbar = () => {
         </section>
         <section>
           <div>
-            <button name="Kanban" onClick={handleBoardType}>
+            <button
+              className={boardType === "Kanban" ? style.selected : ""}
+              name="Kanban"
+              onClick={handleBoardType}
+            >
               Kanban
             </button>
-            <button name="List" onClick={handleBoardType}>
+            <button
+              className={boardType === "List" ? style.selected : ""}
+              name="List"
+              onClick={handleBoardType}
+            >
               List
             </button>
           </div>

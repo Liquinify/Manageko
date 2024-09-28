@@ -1,7 +1,7 @@
 .kanban {
   background: white;
   width: 18rem;
-  height: 14rem;
+  min-height: 14rem;
   margin-top: 1.5rem;
   border-radius: 5px;
   border: 1px solid gray;
@@ -24,9 +24,10 @@
     margin-left: 1rem;
     font-size: 14px;
     color: gray;
+    line-break: normal;
   }
 
-  & > h4 {
+  & > p {
     border: 1px solid lightgray;
     background-color: lightgray;
     width: 5rem;
@@ -36,6 +37,15 @@
     align-items: center;
     border-radius: 5px;
     margin-left: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  & > div {
+    background: lightblue;
+    width: 100%;
+    height: 0.2rem;
+    margin-top: 4rem;
   }
 }
 
@@ -57,7 +67,7 @@
     color: gray;
   }
 
-  & > h4 {
+  & > p {
     border: 1px solid lightgray;
     background-color: lightgray;
     width: 5rem;

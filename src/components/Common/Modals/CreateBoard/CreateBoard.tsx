@@ -44,6 +44,7 @@ const CreateBoard = ({
                 onChange={(e) => {
                   onChange(column.id, e.target.value);
                 }}
+                required
               />
               <MdOutlineClear onClick={() => deleteTask(column.id)} />
             </div>

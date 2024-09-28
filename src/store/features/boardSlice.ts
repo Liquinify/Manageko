@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { newBoard } from "../../types/board/newBoard";
 import { v4 as uuidv4 } from "uuid";
-import { Tasks } from "../../types/tasks/tasks";
+import { Task } from "../../types/tasks/tasks";
 
 const boards = [
   {
@@ -64,7 +64,7 @@ const boardSlice = createSlice({
       const currentColumn = currentBoard?.columns.find(
         (col) => col.name === selectedColumn
       );
-      const newTask: Tasks = {
+      const newTask: Task = {
         id: uuidv4(),
         title,
         description,

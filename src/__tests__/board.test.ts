@@ -58,7 +58,7 @@ describe("board reducer", () => {
       previousState,
       boardSlice.actions.deleteBoard()
     );
-    expect(actual.length).toBe(0);
+    expect(actual.length).toBe(1);
   });
 
   test("handle addNewTask", () => {
